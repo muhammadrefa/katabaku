@@ -169,6 +169,8 @@
                 if (round < words.length) {
                     while (!next_round) {
                         curr = Math.floor(Math.random() * words.length);
+                        if (curr >= words.length)
+                            continue;
                         if (used.indexOf(curr) < 0)
                             next_round = true;
                     }
