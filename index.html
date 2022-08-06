@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="id">
+    <head>
+        <title>Kata Baku</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="bootstrap.min.css" rel="stylesheet">
+    </head>
+    <body class="bg-light">
+        <div class="container">
+            <div class="row pt-2 text-center">
+                <h1 class="h1">Kata Baku</h1>
+            </div>
+
+            <div class="row pt-2">
+                <div class="col-6">
+                    <p>Skor : <span id="score">-</span></p>
+                </div>
+                <div class="col-6 text-end">
+                    <p>Sisa nyawa : <span id="lives">-</span></p>
+                </div>
+            </div>
+
+            <div class="row pt-2">
+                <div class="progress">
+                    <div id="time_bar" class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%"></div>
+                </div>
+            </div>
+        
+            <div class="row pt-4">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-lg btn-success" id="start">Mulai</button>
+                </div>
+                <div class="d-none gap-2">
+                    <button class="btn btn-lg" id="optionL">Kiri</button>
+                    <button class="btn btn-lg" id="optionR">Kanan</button>
+                </div>
+                <div class="col d-none" id="end_messages">
+                    <p>Permainan selesai!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script src="daftarkata.js"></script>
+        <script>
+            var score;
+            var lives;
+            var used = [];
+            var round = 0;
+            var curr = null;
+            var right_is_true = 0;
+            const optionL = document.querySelector('button#optionL');
+            const optionR = document.querySelector('button#optionR');
+            const scorePlaceholder = document.querySelector('span#score');
+            const livesPlaceholder = document.querySelector('span#lives');
+            const bttnsPlaceholder = optionL.parentNode;
+            const edmsgPlaceholder = document.querySelector('div#end_messages');
+            const startButton = document.querySelector('button#start');
+
+            var time_wait = 5.0;
+            var time_elps = 0.0;
+            const time_intv = 0.1;
+            const timeBar = document.querySelector('div#time_bar');
+            var t_time = 0;
+
+            var state_answered = 0;
+
+            function startGame() {
+                startButton.parentNode.classList.toggle("d-none");
+                startButton.parentNode.classList.remove("d-grid");
+                bttnsPlaceholder.classList.toggle("d-grid");
+                bttnsPlaceholder.classList.remove("d-none");
+                score = 0;
+                lives = 5;
+                used = [];
+                round = 0;
+                statsUpdate();
+                newQuestion();
+            }
+
+            function endGame() {
+                timeBar.style.width = "0%";
+                bttnsPlaceholder.classList.toggle("d-none");
+                bttnsPlaceholder.classList.remove("d-grid");
+                edmsgPlaceholder.classList.toggle("d-block");
+                edmsgPlaceholder.classList.remove("d-none");
+            }
+
+            function startTimer(seconds) {
+                timeBar.style.width = "100%";
+                time_wait = seconds;
+                time_elps = 0;
+                t_time = setTimeout(timerUpdate, time_intv * 1000);
+            }
+
+            function stopTimer() {
+                clearTimeout(t_time);
+            }
+
+            function timerUpdate() {
+                timeBar.style.width = (((time_wait - time_elps) / time_wait) * 100) + "%";
+                time_elps += time_intv;
+                if (time_wait >= time_elps)
+                    t_time = setTimeout(timerUpdate, time_intv * 1000);
+                else {
+                    timeBar.style.width = "0%";
+                    if (!state_answered)
+                       notAnswered();
+                }
+            }
+
+            function statsUpdate() {
+                while (scorePlaceholder.firstChild)
+                    scorePlaceholder.removeChild(scorePlaceholder.firstChild);
+                scorePlaceholder.appendChild(document.createTextNode(score));
+
+                while (livesPlaceholder.firstChild)
+                    livesPlaceholder.removeChild(livesPlaceholder.firstChild);
+                livesPlaceholder.appendChild(document.createTextNode(lives));
+            }
+
+            function optionUpdate(option_left, option_right) {
+                while (optionL.firstChild)
+                    optionL.removeChild(optionL.firstChild);
+                while (optionR.firstChild)
+                    optionR.removeChild(optionR.firstChild);
+                optionL.appendChild(document.createTextNode(option_left));
+                optionR.appendChild(document.createTextNode(option_right));
+            }
+
+            function getWords(idx) {
+                return words[idx];
+            }
+
+            function newQuestion() {
+                stopTimer();
+
+                if (lives == 0) {
+                    endGame();
+                    return;
+                }
+
+                state_answered = false;
+                var next_round = false;
+                used.push(curr);
+
+                optionL.classList.remove("btn-success");
+                optionL.classList.remove("btn-danger");
+                optionR.classList.remove("btn-success");
+                optionR.classList.remove("btn-danger");
+
+                /*
+                // Not random
+                if (curr == null)
+                    curr = 0;
+                else if (round < words_count) {
+                    curr += 1;
+                }
+                else {
+                    optionUpdate("-", "-");
+                    next_round = false;
+                    endGame()
+                    return;
+                }
+                */
+
+                // Random
+                if (round < words.length) {
+                    while (!next_round) {
+                        curr = Math.floor((Math.random() * 10)) % words.length;
+                        if (used.indexOf(curr) < 0)
+                            next_round = true;
+                    }
+                }
+
+                if (next_round) {
+                    var w = getWords(curr);
+                    right_is_true = Math.floor((Math.random() * 10)) % 2;
+                    optionUpdate(right_is_true ? w[1] : w[0], right_is_true ? w[0] : w[1]);
+                    round += 1;
+                }
+                else {
+                    optionUpdate("-", "-");
+                    next_round = false;
+                    endGame()
+                    return;
+                }
+
+                optionL.classList.toggle("btn-primary");
+                optionR.classList.toggle("btn-primary");
+
+                optionL.disabled = false;
+                optionR.disabled = false;
+
+                startTimer(5);
+            }
+
+            function notAnswered() {
+                state_answered = true;
+                lives -= 1;
+                optionL.disabled = true
+                optionR.disabled = true
+                showAnswer();
+            }
+
+            function answer(chooseRight) {
+                if (!state_answered) {
+                    if (chooseRight)
+                        optionL.disabled = true
+                    else
+                        optionR.disabled = true
+                    if (chooseRight == right_is_true)
+                        score += 1;
+                    else
+                        lives -= 1;
+
+                    showAnswer();
+                }
+            }
+
+            function showAnswer() {
+                state_answered = true;
+                stopTimer();
+                optionL.classList.remove("btn-primary");
+                optionR.classList.remove("btn-primary");
+
+                if (right_is_true) {
+                    optionL.classList.toggle("btn-danger");
+                    optionR.classList.toggle("btn-success");
+                }
+                else {
+                    optionL.classList.toggle("btn-success");
+                    optionR.classList.toggle("btn-danger");
+                }
+
+                statsUpdate();
+                startTimer(3);
+                setTimeout(newQuestion, 3000);
+            }
+
+            optionL.addEventListener('click', () => answer(false));
+            optionR.addEventListener('click', () => answer(true));
+
+            startButton.addEventListener('click', () => {
+                startGame();
+            })
+        </script>
+    </body>
+    
+</html>
