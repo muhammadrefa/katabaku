@@ -32,7 +32,7 @@ var words = [
     ["bekerja sama", "berkerja sama"],
     ["bernapaskan", "bernafaskan"],
     ["barzanji", "berzanji"],
-    ["bilamana", "bila mana"]
+    ["bilamana", "bila mana"],
     ["biomolekuler", "biomolekular"],
     ["penatu", "binatu"],
     ["bonafide", "bonafid"],
