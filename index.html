@@ -32,8 +32,8 @@
                     <button class="btn btn-lg btn-success" id="start">Mulai</button>
                 </div>
                 <div class="d-none gap-2">
-                    <button class="btn btn-lg" id="optionL">Kiri</button>
-                    <button class="btn btn-lg" id="optionR">Kanan</button>
+                    <button class="btn btn-lg btn-primary" id="optionL">Kiri</button>
+                    <button class="btn btn-lg btn-primary" id="optionR">Kanan</button>
                 </div>
                 <div class="col d-none" id="end_messages">
                     <p>Permainan selesai!</p>
@@ -203,10 +203,8 @@
                 state_answered = false;
                 var next_round = false;
 
-                optionL.classList.remove("btn-success");
-                optionL.classList.remove("btn-danger");
-                optionR.classList.remove("btn-success");
-                optionR.classList.remove("btn-danger");
+                optionL.classList.remove("btn-success", "btn-outline-success", "btn-danger", "btn-outline-danger", "btn-primary");
+                optionR.classList.remove("btn-success", "btn-outline-success", "btn-danger", "btn-outline-danger", "btn-primary");
 
                 /*
                 // Not random
@@ -247,8 +245,8 @@
                     return;
                 }
 
-                optionL.classList.toggle("btn-primary");
-                optionR.classList.toggle("btn-primary");
+                optionL.classList.add("btn-primary");
+                optionR.classList.add("btn-primary");
 
                 optionL.disabled = false;
                 optionR.disabled = false;
@@ -267,18 +265,21 @@
 
             function answer(chooseRight) {
                 if (!state_answered) {
-                    if (chooseRight)
-                        optionL.disabled = true
-                    else
-                        optionR.disabled = true
+                    optionL.disabled = true
+                    optionR.disabled = true
                     
-                    results.push(chooseRight == right_is_true);
-                    if (chooseRight == right_is_true)
+                    var chosed = chooseRight ? optionR : optionL;
+                    var correct = (chooseRight == right_is_true);
+
+                    results.push(correct);
+                    if (correct)
                         score += 1;
                     else
                         lives -= 1;
 
                     showAnswer();
+                    chosed.classList.replace("btn-outline-success", "btn-success");
+                    chosed.classList.replace("btn-outline-danger", "btn-danger");
                 }
             }
 
@@ -288,14 +289,8 @@
                 optionL.classList.remove("btn-primary");
                 optionR.classList.remove("btn-primary");
 
-                if (right_is_true) {
-                    optionL.classList.toggle("btn-danger");
-                    optionR.classList.toggle("btn-success");
-                }
-                else {
-                    optionL.classList.toggle("btn-success");
-                    optionR.classList.toggle("btn-danger");
-                }
+                optionL.classList.toggle(right_is_true ? "btn-outline-danger" : "btn-outline-success");
+                optionR.classList.toggle(right_is_true ? "btn-outline-success" : "btn-outline-danger");
 
                 used.push(curr);
                 statsUpdate();
