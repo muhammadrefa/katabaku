@@ -14,10 +14,10 @@
 
             <div class="row pt-2">
                 <div class="col-6">
-                    <p>Skor : <span id="score">-</span></p>
+                    <p>Skor: <span id="score">-</span></p>
                 </div>
                 <div class="col-6 text-end">
-                    <p>Sisa nyawa : <span id="lives">-</span></p>
+                    <p>Sisa nyawa: <span id="lives">-</span></p>
                 </div>
             </div>
 
@@ -37,6 +37,17 @@
                 </div>
                 <div class="col d-none" id="end_messages">
                     <p>Permainan selesai!</p>
+                    <p class="small">Keterangan: Bagian yang dicetak tebal adalah jawaban Anda</p>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>No.</th>
+                                <th>Baku</th>
+                                <th>Tidak baku</th>
+                            </tr>
+                        </thead>
+                        <tbody id="wordlist"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -47,6 +58,7 @@
             var score;
             var lives;
             var used = [];
+            var results = [];
             var round = 0;
             var curr = null;
             var right_is_true = 0;
@@ -57,6 +69,7 @@
             const bttnsPlaceholder = optionL.parentNode;
             const edmsgPlaceholder = document.querySelector('div#end_messages');
             const startButton = document.querySelector('button#start');
+            const wordsTable = document.querySelector('tbody#wordlist');
 
             var time_wait = 5.0;
             var time_elps = 0.0;
@@ -67,24 +80,56 @@
             var state_answered = 0;
 
             function startGame() {
+                // Hide start button
                 startButton.parentNode.classList.toggle("d-none");
                 startButton.parentNode.classList.remove("d-grid");
                 bttnsPlaceholder.classList.toggle("d-grid");
                 bttnsPlaceholder.classList.remove("d-none");
+
+                // Reset variables
                 score = 0;
                 lives = 5;
                 used = [];
                 round = 0;
+                while (wordsTable.firstChild)
+                    wordsTable.removeChild(wordsTable.firstChild);
+                
                 statsUpdate();
                 newQuestion();
             }
 
             function endGame() {
                 timeBar.style.width = "0%";
+                showResults();
                 bttnsPlaceholder.classList.toggle("d-none");
                 bttnsPlaceholder.classList.remove("d-grid");
                 edmsgPlaceholder.classList.toggle("d-block");
                 edmsgPlaceholder.classList.remove("d-none");
+            }
+
+            function showResults() {
+                console.log("showResults");
+                for (var i=0; i<used.length; i++) {
+                    var w = getWords(used[i]);
+                    console.log("i " + i + " used " + used[i]);
+                    console.log("w0 " + w[0] + " w1 " + w[1]);
+
+                    var tr = document.createElement("tr");
+                    tr.innerHTML = "<td>1</td><td>hai</td><td>halo</td>";
+                    tr.innerHTML = "<td>" + (i+1) + "</td>";
+
+                    if (results[i] == true)
+                        tr.innerHTML += "<td><strong>" + w[0] + "</strong></td>";
+                    else
+                        tr.innerHTML += "<td>" + w[0] + "</td>";
+
+                    if (results[i] == false)
+                        tr.innerHTML += "<td><strong>" + w[1] + "</strong></td>";
+                    else
+                        tr.innerHTML += "<td>" + w[1] + "</td>";
+
+                    wordsTable.appendChild(tr);
+                }
             }
 
             function startTimer(seconds) {
@@ -143,7 +188,6 @@
 
                 state_answered = false;
                 var next_round = false;
-                used.push(curr);
 
                 optionL.classList.remove("btn-success");
                 optionL.classList.remove("btn-danger");
@@ -200,6 +244,7 @@
 
             function notAnswered() {
                 state_answered = true;
+                results.push(null);
                 lives -= 1;
                 optionL.disabled = true
                 optionR.disabled = true
@@ -212,6 +257,8 @@
                         optionL.disabled = true
                     else
                         optionR.disabled = true
+                    
+                    results.push(chooseRight == right_is_true);
                     if (chooseRight == right_is_true)
                         score += 1;
                     else
@@ -236,6 +283,7 @@
                     optionR.classList.toggle("btn-danger");
                 }
 
+                used.push(curr);
                 statsUpdate();
                 startTimer(3);
                 setTimeout(newQuestion, 3000);
