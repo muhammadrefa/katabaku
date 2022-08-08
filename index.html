@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="id">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Kata Baku</title>
 
         <!-- Bootstrap core CSS -->
@@ -26,7 +27,7 @@
                     <div id="time_bar" class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%"></div>
                 </div>
             </div>
-        
+
             <div class="row pt-4">
                 <div class="d-grid gap-2">
                     <button class="btn btn-lg btn-success" id="start">Mulai</button>
@@ -107,7 +108,7 @@
                 round = 0;
                 while (wordsTable.firstChild)
                     wordsTable.removeChild(wordsTable.firstChild);
-                
+
                 statsUpdate();
                 newQuestion();
             }
@@ -267,7 +268,7 @@
                 if (!state_answered) {
                     optionL.disabled = true
                     optionR.disabled = true
-                    
+
                     var chosed = chooseRight ? optionR : optionL;
                     var correct = (chooseRight == right_is_true);
 
@@ -306,5 +307,5 @@
             })
         </script>
     </body>
-    
+
 </html>
