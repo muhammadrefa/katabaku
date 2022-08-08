@@ -74,7 +74,32 @@ var words = [
     ["dividen", "deviden"],
     ["diagnosis", "diagnosa"],
     ["diode", "dioda"],
-    ["desain", "disain"]
+    ["desain", "disain"],
+    ["diskotek", "diskotik"],
+    ["diskret", "diskrit"],
+    ["dus", "dos"],
+    ["dramatisasi", "dramatisir"],
+    ["dukacita", "duka cita"],
+    ["efektivitas", "efektifitas"],
+    ["ekshibisi", "eksibisi"],
+    ["eksploitasi", "eksploitir"],
+    ["ekstrem", "ekstrim"],
+    ["elite", "elit"],
+    ["ensiklopedia", "ensiklopedi"],
+    ["anta", "ente"],
+    ["erotis", "erotik"],
+    ["paham", "faham"],
+    ["faedah", "faidah"],
+    ["familier", "familiar"],
+    ["feminin", "feminim"],
+    ["pikir", "fikir"],
+    ["fon", "fonta"],
+    ["fotosintesis", "fotosintesa"],
+    ["frasa", "frase"],
+    ["frekuensi", "frekwensi"],
+    ["frustrasi", "frustasi"],
+    ["polan", "fulan"],
+    ["genting", "genteng"]
 ];
 
 var words_count = words.length;
