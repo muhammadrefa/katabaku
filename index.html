@@ -86,9 +86,9 @@
             const startButton = document.querySelector('button#start');
             const wordsTable = document.querySelector('tbody#wordlist');
 
-            var time_wait = 5.0;
-            var time_elps = 0.0;
-            const time_intv = 0.1;
+            var time_wait = 5000;
+            var time_elps = 0;
+            const time_intv = 100;
             const timeBar = document.querySelector('div#time_bar');
             var t_time = 0;
 
@@ -149,9 +149,9 @@
 
             function startTimer(seconds) {
                 timeBar.style.width = "100%";
-                time_wait = seconds;
+                time_wait = seconds*1000;
                 time_elps = 0;
-                t_time = setTimeout(timerUpdate, time_intv * 1000);
+                t_time = setTimeout(timerUpdate, time_intv);
             }
 
             function stopTimer() {
@@ -159,14 +159,17 @@
             }
 
             function timerUpdate() {
-                timeBar.style.width = (((time_wait - time_elps) / time_wait) * 100) + "%";
+                var percentage = ((time_wait - time_elps) / time_wait) * 100;
+                timeBar.style.width = ((percentage >= 0) ? percentage : 0) + "%";
                 time_elps += time_intv;
                 if (time_wait >= time_elps)
-                    t_time = setTimeout(timerUpdate, time_intv * 1000);
+                    t_time = setTimeout(timerUpdate, time_intv);
                 else {
                     timeBar.style.width = "0%";
                     if (!state_answered)
                        notAnswered();
+                    else
+                        newQuestion();
                 }
             }
 
@@ -296,7 +299,7 @@
                 used.push(curr);
                 statsUpdate();
                 startTimer(3);
-                setTimeout(newQuestion, 3000);
+                // setTimeout(newQuestion, 3000);
             }
 
             optionL.addEventListener('click', () => answer(false));
