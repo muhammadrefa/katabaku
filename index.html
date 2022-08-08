@@ -9,32 +9,32 @@
     </head>
     <body class="bg-light">
         <div class="container">
-            <div class="row pt-2 text-center">
-                <h1 class="h1">Kata Baku</h1>
+            <div class="row pt-4 text-center">
+                <h1 class="h2">Kata Baku</h1>
             </div>
 
             <div class="row pt-2">
                 <div class="col-6">
-                    <p>Skor: <span id="score">-</span></p>
+                    <p class="h5">Skor: <span id="score">-</span></p>
                 </div>
                 <div class="col-6 text-end">
-                    <p>Sisa nyawa: <span id="lives">-</span></p>
+                    <p class="h5">Sisa nyawa: <span id="lives">-</span></p>
                 </div>
             </div>
 
-            <div class="row pt-2">
+            <div class="pt-2">
                 <div class="progress">
                     <div id="time_bar" class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%"></div>
                 </div>
             </div>
 
             <div class="row pt-4">
-                <div class="d-grid gap-2">
-                    <button class="btn btn-lg btn-success" id="start">Mulai</button>
+                <div class="d-grid">
+                    <button class="btn btn-lg btn-success py-3" id="start">Mulai</button>
                 </div>
-                <div class="d-none gap-2">
-                    <button class="btn btn-lg btn-primary" id="optionL">Kiri</button>
-                    <button class="btn btn-lg btn-primary" id="optionR">Kanan</button>
+                <div class="d-none gap-4 justify-content-md-between">
+                    <button class="btn btn-lg btn-primary flex-md-grow-1 py-3" id="optionL">Kiri</button>
+                    <button class="btn btn-lg btn-primary flex-md-grow-1 py-3" id="optionR">Kanan</button>
                 </div>
                 <div class="col d-none" id="end_messages">
                     <p>Permainan selesai!</p>
@@ -86,9 +86,9 @@
             const startButton = document.querySelector('button#start');
             const wordsTable = document.querySelector('tbody#wordlist');
 
-            var time_wait = 5.0;
-            var time_elps = 0.0;
-            const time_intv = 0.1;
+            var time_wait = 5000;
+            var time_elps = 0;
+            const time_intv = 100;
             const timeBar = document.querySelector('div#time_bar');
             var t_time = 0;
 
@@ -99,6 +99,7 @@
                 startButton.parentNode.classList.toggle("d-none");
                 startButton.parentNode.classList.remove("d-grid");
                 bttnsPlaceholder.classList.toggle("d-grid");
+                bttnsPlaceholder.classList.toggle("d-md-flex");
                 bttnsPlaceholder.classList.remove("d-none");
 
                 // Reset variables
@@ -117,7 +118,7 @@
                 timeBar.style.width = "0%";
                 showResults();
                 bttnsPlaceholder.classList.toggle("d-none");
-                bttnsPlaceholder.classList.remove("d-grid");
+                bttnsPlaceholder.classList.remove("d-grid", "d-md-flex");
                 edmsgPlaceholder.classList.toggle("d-block");
                 edmsgPlaceholder.classList.remove("d-none");
             }
@@ -149,9 +150,9 @@
 
             function startTimer(seconds) {
                 timeBar.style.width = "100%";
-                time_wait = seconds;
+                time_wait = seconds*1000;
                 time_elps = 0;
-                t_time = setTimeout(timerUpdate, time_intv * 1000);
+                t_time = setTimeout(timerUpdate, time_intv);
             }
 
             function stopTimer() {
@@ -159,14 +160,17 @@
             }
 
             function timerUpdate() {
-                timeBar.style.width = (((time_wait - time_elps) / time_wait) * 100) + "%";
+                var percentage = ((time_wait - time_elps) / time_wait) * 100;
+                timeBar.style.width = ((percentage >= 0) ? percentage : 0) + "%";
                 time_elps += time_intv;
                 if (time_wait >= time_elps)
-                    t_time = setTimeout(timerUpdate, time_intv * 1000);
+                    t_time = setTimeout(timerUpdate, time_intv);
                 else {
                     timeBar.style.width = "0%";
                     if (!state_answered)
                        notAnswered();
+                    else
+                        newQuestion();
                 }
             }
 
@@ -296,7 +300,7 @@
                 used.push(curr);
                 statsUpdate();
                 startTimer(3);
-                setTimeout(newQuestion, 3000);
+                // setTimeout(newQuestion, 3000);
             }
 
             optionL.addEventListener('click', () => answer(false));
