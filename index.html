@@ -37,8 +37,11 @@
                     <button class="btn btn-lg btn-primary flex-md-grow-1 py-3" id="optionR">Kanan</button>
                 </div>
                 <div class="col d-none" id="end_messages">
-                    <p>Permainan selesai!</p>
-                    <div class="accordion">
+                    <p class="h5 text-center py-2">Permainan selesai!</p>
+                    <div class="d-grid">
+                        <button class="btn btn-lg btn-success py-3" id="retry">Bermain kembali</button>
+                    </div>
+                    <div class="accordion py-3">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#result-div">
@@ -84,6 +87,7 @@
             const bttnsPlaceholder = optionL.parentNode;
             const edmsgPlaceholder = document.querySelector('div#end_messages');
             const startButton = document.querySelector('button#start');
+            const retryButton = document.querySelector('button#retry');
             const wordsTable = document.querySelector('tbody#wordlist');
 
             var time_wait = 5000;
@@ -95,16 +99,22 @@
             var state_answered = 0;
 
             function startGame() {
-                // Hide start button
-                startButton.parentNode.classList.toggle("d-none");
+                // Hide end message div
+                edmsgPlaceholder.classList.add("d-none");
+                edmsgPlaceholder.classList.remove("d-block");
+
+                // Hide start button div
+                startButton.parentNode.classList.add("d-none");
                 startButton.parentNode.classList.remove("d-grid");
-                bttnsPlaceholder.classList.toggle("d-grid");
-                bttnsPlaceholder.classList.toggle("d-md-flex");
+
+                // Show answer buttons
+                bttnsPlaceholder.classList.add("d-grid");
+                bttnsPlaceholder.classList.add("d-md-flex");
                 bttnsPlaceholder.classList.remove("d-none");
 
                 // Reset variables
                 score = 0;
-                lives = 5;
+                lives = 2;
                 used = [];
                 round = 0;
                 while (wordsTable.firstChild)
@@ -117,18 +127,19 @@
             function endGame() {
                 timeBar.style.width = "0%";
                 showResults();
-                bttnsPlaceholder.classList.toggle("d-none");
+
+                // Hide answer buttons
+                bttnsPlaceholder.classList.add("d-none");
                 bttnsPlaceholder.classList.remove("d-grid", "d-md-flex");
-                edmsgPlaceholder.classList.toggle("d-block");
+
+                // Show end message div
+                edmsgPlaceholder.classList.add("d-block");
                 edmsgPlaceholder.classList.remove("d-none");
             }
 
             function showResults() {
-                console.log("showResults");
                 for (var i=0; i<used.length; i++) {
                     var w = getWords(used[i]);
-                    console.log("i " + i + " used " + used[i]);
-                    console.log("w0 " + w[0] + " w1 " + w[1]);
 
                     var tr = document.createElement("tr");
                     tr.innerHTML = "<td>1</td><td>hai</td><td>halo</td>";
@@ -305,10 +316,8 @@
 
             optionL.addEventListener('click', () => answer(false));
             optionR.addEventListener('click', () => answer(true));
-
-            startButton.addEventListener('click', () => {
-                startGame();
-            })
+            startButton.addEventListener('click', () => startGame());
+            retryButton.addEventListener('click', () => startGame());
         </script>
     </body>
 
