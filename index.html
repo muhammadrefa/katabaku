@@ -37,9 +37,9 @@
                     <button class="btn btn-lg btn-primary flex-md-grow-1 py-3" id="optionR">Kanan</button>
                 </div>
                 <div class="col d-none" id="end_messages">
-                    <p class="h5 text-center py-2">Permainan selesai!</p>
-                    <div class="d-grid">
-                        <button class="btn btn-lg btn-success py-3" id="retry">Bermain kembali</button>
+                    <div class="d-grid d-md-flex gap-4 justify-content-md-between">
+                        <p class="h5 text-center flex-md-grow-1 py-md-3">Permainan selesai!</p>
+                        <button class="btn btn-lg btn-success flex-md-grow-1 py-3" id="retry">Bermain kembali</button>
                     </div>
                     <div class="accordion py-3">
                         <div class="accordion-item">
@@ -114,7 +114,7 @@
 
                 // Reset variables
                 score = 0;
-                lives = 2;
+                lives = 5;
                 used = [];
                 round = 0;
                 while (wordsTable.firstChild)
