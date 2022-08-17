@@ -358,6 +358,17 @@
                 var text = "Saya berhasil menjawab " + score + " kata baku dengan benar! Bagaimana denganmu?";
                 window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "&url=" + encodeURIComponent("https://katabaku.pages.dev"));
             });
+
+            shareTweetWord.addEventListener('click', () => {
+                var idx_no = Math.floor(Math.random() * used.length);
+                var word = getWords(used[idx_no]);
+                var text = "";
+                if (results[idx_no])
+                    text = "Tahukah kamu bahwa bentuk baku dari \"" + word[1] + "\" adalah \"" + word[0] + "\"? Ayo uji kemampuanmu!";
+                else
+                    text = "Ternyata bahwa bentuk baku dari \"" + word[1] + "\" adalah \"" + word[0] + "\"! Ayo uji kemampuanmu!";
+                window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "&url=" + encodeURIComponent("https://katabaku.pages.dev"));
+            });
         </script>
     </body>
 
