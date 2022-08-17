@@ -1,3 +1,4 @@
+// Words source: KBBI V
 // [true, false]
 var words = [
     ["azan", "adzan"],
