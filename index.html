@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="id">
     <head>
+        <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Kata Baku</title>
 
@@ -40,6 +41,7 @@
                     <div class="d-grid d-md-flex gap-4 justify-content-md-between">
                         <p class="h5 text-center flex-md-grow-1 py-md-3">Permainan selesai!</p>
                         <button class="btn btn-lg btn-success flex-md-grow-1 py-3" id="retry">Bermain kembali</button>
+                        <button class="btn btn-lg btn-info flex-md-grow-1 py-3" data-bs-toggle="modal" data-bs-target="#modalShare">Bagikan</button>
                     </div>
                     <div class="accordion py-3">
                         <div class="accordion-item">
@@ -69,6 +71,38 @@
             </div>
         </div>
 
+        <!-- Modal -->
+        <div class="modal fade" id="modalShare" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Bagikan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        <button type="button" class="btn btn-primary" id="shareTweetScore">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                                <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"></path>
+                            </svg>
+                            Skor
+                        </button>
+                        Bagikan skor Anda
+                    </p>
+                    <p>
+                        <button type="button" class="btn btn-primary" id="shareTweetWord">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
+                                <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"></path>
+                            </svg>
+                            Kata
+                        </button>
+                        Bagikan salah satu jawaban Anda
+                    </p>
+                </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Scripts -->
         <script src="bootstrap.min.js"></script>
         <script src="daftarkata.js"></script>
@@ -89,6 +123,8 @@
             const startButton = document.querySelector('button#start');
             const retryButton = document.querySelector('button#retry');
             const wordsTable = document.querySelector('tbody#wordlist');
+            const shareTweetScore = document.querySelector('button#shareTweetScore');
+            const shareTweetWord = document.querySelector('button#shareTweetWord');
 
             var time_wait = 5000;
             var time_elps = 0;
@@ -311,13 +347,17 @@
                 used.push(curr);
                 statsUpdate();
                 startTimer(3);
-                // setTimeout(newQuestion, 3000);
             }
 
             optionL.addEventListener('click', () => answer(false));
             optionR.addEventListener('click', () => answer(true));
             startButton.addEventListener('click', () => startGame());
             retryButton.addEventListener('click', () => startGame());
+
+            shareTweetScore.addEventListener('click', () => {
+                var text = "Saya berhasil menjawab " + score + " kata baku dengan benar! Bagaimana denganmu?";
+                window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "&url=" + encodeURIComponent("https://katabaku.pages.dev"));
+            });
         </script>
     </body>
 
