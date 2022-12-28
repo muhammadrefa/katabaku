@@ -157,6 +157,7 @@ var words = [
     ["jomlo", "jomblo"],
     ["yuyitsu", "jujitsu"],
     ["kecoak", "kacoak"],
+    ["kecoak", "kecoa"],
     ["kedaluwarsa", "kadaluarsa"],
     ["kedaluwarsa", "kadaluwarsa"],
     ["kaidah", "kaedah"],
@@ -169,7 +170,27 @@ var words = [
     ["karbida", "karbit"],
     ["korsel", "karosel"],
     ["kastel", "kastil"],
-    ["kategori", "katagori"]
+    ["kategori", "katagori"],
+    ["kadar", "kedar"],
+    ["kedondong", "kedongdong"],
+    ["klimis", "kelimis"],
+    ["keluak", "keluwek"],
+    ["kemarin", "kemaren"],
+    ["kilau", "kemilau"],
+    ["kempis", "kempes"],
+    ["knalpot", "kenalpot"],
+    ["kendur", "kendor"],
+    ["kentung", "kentong"],
+    ["kardus", "kerdus"],
+    ["kusuma", "kesuma"],
+    ["katapel", "ketapel"],
+    ["kabar", "khabar"],
+    ["karisma", "kharisma"],
+    ["khazanah", "khasanah"],
+    ["khusyuk", "khusuk"],
+    ["khotbah", "khutbah"],
+    ["kelenteng", "klenteng"],
+    ["klona", "klon"]
 ];
 
 var words_count = words.length;
