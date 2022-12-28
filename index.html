@@ -207,7 +207,9 @@
             }
 
             function timerUpdate() {
-                var percentage = ((time_wait - time_elps) / time_wait) * 100;
+                var percentage = ((time_wait - time_elps - 500) / (time_wait - 500)) * 100;
+                if (time_elps < 500)
+                    percentage = 100;
                 timeBar.style.width = ((percentage >= 0) ? percentage : 0) + "%";
                 time_elps += time_intv;
                 if (time_wait >= time_elps)
