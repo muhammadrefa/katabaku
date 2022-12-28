@@ -150,7 +150,26 @@ var words = [
     ["zaman", "jaman"],
     ["zamrud", "jamrud"],
     ["jenderal", "jendral"],
-    ["genius", "jenius"]
+    ["genius", "jenius"],
+    ["jeriken", "jerigen"],
+    ["joget", "joged"],
+    ["Yogyakarta", "Jogjakarta"],
+    ["jomlo", "jomblo"],
+    ["yuyitsu", "jujitsu"],
+    ["kecoak", "kacoak"],
+    ["kedaluwarsa", "kadaluarsa"],
+    ["kedaluwarsa", "kadaluwarsa"],
+    ["kaidah", "kaedah"],
+    ["kafeina", "kafein"],
+    ["kakaktua", "kakatua"],
+    ["kamerawan", "kameramen"],
+    ["kamper", "kamfer"],
+    ["kanguru", "kangguru"],
+    ["kaus", "kaos"],
+    ["karbida", "karbit"],
+    ["korsel", "karosel"],
+    ["kastel", "kastil"],
+    ["kategori", "katagori"]
 ];
 
 var words_count = words.length;
