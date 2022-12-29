@@ -155,7 +155,7 @@ var words = [
     ["joget", "joged"],
     ["Yogyakarta", "Jogjakarta"],
     ["jomlo", "jomblo"],
-    ["yuyitsu", "jujitsu"],
+    ["jujitsu", "yuyitsu"],
     ["kecoak", "kacoak"],
     ["kecoak", "kecoa"],
     ["kedaluwarsa", "kadaluarsa"],
