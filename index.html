@@ -367,7 +367,7 @@
 
             document.addEventListener("DOMContentLoaded", () => {
                 var text_span = document.createElement("span");
-                text_span.textContent = "Jumlah kata: " + words.length + " | ";
+                text_span.textContent = "Jumlah soal: " + words.length + " | ";
                 footer.prepend(text_span);
             });
 
@@ -383,7 +383,7 @@
                 if (results[idx_no])
                     text = "Tahukah kamu bahwa bentuk baku dari \"" + word[1] + "\" adalah \"" + word[0] + "\"? Ayo uji kemampuanmu!";
                 else
-                    text = "Ternyata bahwa bentuk baku dari \"" + word[1] + "\" adalah \"" + word[0] + "\"! Ayo uji kemampuanmu!";
+                    text = "Ternyata bentuk baku dari \"" + word[1] + "\" adalah \"" + word[0] + "\"! Ayo uji kemampuanmu!";
                 window.open("https://twitter.com/intent/tweet?text=" + encodeURIComponent(text) + "&url=" + encodeURIComponent("https://katabaku.pages.dev"));
             });
         </script>
