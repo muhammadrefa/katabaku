@@ -1,5 +1,6 @@
-// Capitalized = true
-var words = [
+const word_source = "Test list"
+// [true, false]
+const words = [
     ["A", "a"],
     ["B", "b"],
     ["C", "c"],
@@ -14,4 +15,4 @@ var words = [
     ["N", "n"],
 ];
 
-var words_count = words.length;
+const words_count = words.length;
